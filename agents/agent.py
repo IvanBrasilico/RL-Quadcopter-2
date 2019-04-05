@@ -33,12 +33,13 @@ class DDPG():
 
         # Replay memory
         self.buffer_size = 100000
-        self.batch_size = 64
+        self.batch_size = 256
         self.memory = ReplayBuffer(self.buffer_size, self.batch_size)
 
         # Algorithm parameters
         self.gamma = 0.99  # discount factor
         self.tau = 0.01  # for soft update of target parameters
+        self.speeds = None
 
     def reset_episode(self):
         self.noise.reset()
@@ -62,7 +63,8 @@ class DDPG():
         """Returns actions for given state(s) as per current policy."""
         state = np.reshape(state, [-1, self.state_size])
         action = self.actor_local.model.predict(state)[0]
-        return list(action + self.noise.sample())  # add some noise for exploration
+        self.speeds = list(action + self.noise.sample())  # add some noise for exploration
+        return self.speeds
 
     def learn(self, experiences):
         """Update policy and value parameters using given batch of experience tuples."""
