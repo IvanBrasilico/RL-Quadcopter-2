@@ -33,7 +33,7 @@ class DDPG():
 
         # Replay memory
         self.buffer_size = 100000
-        self.batch_size = 256
+        self.batch_size = 32
         self.memory = ReplayBuffer(self.buffer_size, self.batch_size)
 
         # Algorithm parameters
@@ -82,6 +82,7 @@ class DDPG():
 
         # Compute Q targets for current states and train critic model (local)
         Q_targets = rewards + self.gamma * Q_targets_next * (1 - dones)
+        # print(Q_targets)
         self.critic_local.model.train_on_batch(x=[states, actions], y=Q_targets)
 
         # Train actor model (local)

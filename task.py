@@ -22,18 +22,19 @@ class Task():
         self.action_repeat = 3
 
         self.state_size = self.action_repeat * 6
-        self.action_low = 0
-        self.action_high = 900
+        self.action_low = 430
+        self.action_high = 440
         self.action_size = 4
 
         # Goal
         self.target_pos = target_pos if target_pos is not None else np.array([0., 0., 10.])
+        self.last_pose = None
 
     def get_reward(self):
         """Uses current pose of sim to return reward."""
         if self.sim.done and self.sim.runtime > self.sim.time:
             return -1000.
-        reward = 30. - np.linalg.norm(self.sim.pose[:3] - self.target_pos)
+        reward = 1000. - np.linalg.norm(self.sim.pose[:3] - self.target_pos)
         return reward
 
     def step(self, rotor_speeds, reward_function=None):
