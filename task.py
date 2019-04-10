@@ -7,7 +7,8 @@ class Task():
     """Task (environment) that defines the goal and provides feedback to the agent."""
 
     def __init__(self, init_pose=None, init_velocities=None,
-                 init_angle_velocities=None, runtime=5., target_pos=None):
+                 init_angle_velocities=None, runtime=5., target_pos=None,
+                 target_v=[0., 0., 8.]):
         """Initialize a Task object.
         Params
         ======
@@ -29,6 +30,7 @@ class Task():
         # Goal
         self.target_pos = target_pos if target_pos is not None else np.array([0., 0., 10.])
         self.last_pose = None
+        self.target_v = target_v
 
     def get_reward(self):
         """Uses current pose of sim to return reward."""
