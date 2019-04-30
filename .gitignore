@@ -2,3 +2,4 @@ quadcop/*
 *.txt
 *.csv
 *.xml
+quadcop-gpu/*

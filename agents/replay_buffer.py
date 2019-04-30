@@ -20,13 +20,6 @@ class ReplayBuffer:
         """Add a new experience to memory."""
         e = self.experience(state, action, reward, next_state, done)
         self.memory.append(e)
-        #### Add repeatdly succesfull plays
-        if repeat_better:
-            self.mean_reward = self.mean_reward + \
-                               ((reward - self.mean_reward) / len(self.memory))
-            if reward > self.mean_reward:
-                for i in range(0, random.randint(1, int(1 + abs(reward - self.mean_reward)))):
-                    self.memory.append(e)
 
     def sample(self, batch_size=64):
         """Randomly sample a batch of experiences from memory."""
