@@ -31,12 +31,18 @@ class Actor:
 
         # Add hidden layers
         # Try different layer sizes, activations, add batch normalization, regularizers, etc.
-        net = layers.Dense(units=512,
+        net = layers.Dense(units=360,
                            activation='relu',
                            kernel_regularizer=layers.regularizers.l2(1e-6)
                            )(states)
         net = layers.BatchNormalization()(net)
-        net = layers.Dense(units=256,
+        net = layers.Dense(units=240,
+                           activation='relu',
+                           kernel_regularizer=layers.regularizers.l2(1e-6)
+                           )(net)
+        net = layers.BatchNormalization()(net)
+        net = layers.Dropout(0.5)(net)
+        net = layers.Dense(units=180,
                            activation='relu',
                            kernel_regularizer=layers.regularizers.l2(1e-6)
                            )(net)
